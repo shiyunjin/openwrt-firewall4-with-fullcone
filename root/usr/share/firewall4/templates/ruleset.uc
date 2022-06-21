@@ -312,9 +312,11 @@ table inet fw4 {
 		{%+ include("redirect.uc", { fw4, redirect }) %}
 {%   endfor %}
 {%   fw4.includes('chain-append', `dstnat_${zone.name}`) %}
-{%   if (zone.fullcone): %}
-		{%+ include("zone-fullcone.uc", { fw4, zone, family: 4, direction: "srcnat" }) %}
-		{%+ include("zone-fullcone.uc", { fw4, zone, family: 6, direction: "srcnat" }) %}
+{%   if (zone.masq && zone.fullcone): %}
+		{%+ include("zone-fullcone.uc", { fw4, zone, family: 4, direction: "dstnat" }) %}
+{%   endif %}
+{%   if (zone.masq6 && zone.fullcone): %}
+		{%+ include("zone-fullcone.uc", { fw4, zone, family: 6, direction: "dstnat" }) %}
 {%   endif %}
 	}
 
