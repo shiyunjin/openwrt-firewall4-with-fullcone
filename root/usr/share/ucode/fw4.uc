@@ -1977,6 +1977,14 @@ return {
 			this.warn_section(data, "fullcone enabled for zone '" + zone.name + "'");
 		}
 
+		if (this.state.defaults && !this.state.defaults.fullcone) {
+			this.warn_section(data, "fullcone in defaults not enabled, ignore zone fullcone setting");
+			zone.fullcone = false;
+		}
+		if (zone.fullcone) {
+			this.warn_section(data, "fullcone enabled for zone '" + zone.name + "'");
+		}
+
 		if (zone.mtu_fix && this.kernel < 0x040a0000) {
 			this.warn_section(data, "option 'mtu_fix' requires kernel 4.10 or later");
 			return;
